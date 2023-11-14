@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e8e0913a876eff842b08f6d156cd9c17
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _Grass: {instanceID: 0}
+  - _Flowers1: {instanceID: 0}
+  - _Flowers2: {instanceID: 0}
+  - _Tree: {instanceID: 0}
+  - _Fire: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
