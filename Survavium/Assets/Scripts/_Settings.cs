@@ -1,12 +1,8 @@
-using Google.Protobuf.WellKnownTypes;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class _Settings : MonoBehaviour
@@ -83,13 +79,11 @@ public class _Settings : MonoBehaviour
     }
     public void SetMasterVolume(float volume)
     {
-        //float value = Mathf.Lerp(-80, 0, volume);
         audioMixer.SetFloat("MasterVolume", volume);
         currentMasterVolume = volume;
     } 
     public void SetMusicVolume(float volume)
     {
-        //float value = Mathf.Lerp(-80, 0, volume);
         audioMixer.SetFloat("MusicVolume", volume);
         currentMusicVolume = volume;
     }

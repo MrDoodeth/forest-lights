@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
-using System.Collections.Generic;
 
 public class _GameManager : MonoBehaviour
 {
@@ -264,13 +263,5 @@ public class _GameManager : MonoBehaviour
         {            
             AddBear(ref i);
         }
-    }
-
-
-
-
-    void Update()
-    {
-
     }
 }

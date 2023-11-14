@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.VFX;
 
-public class Tree : MonoBehaviour
+public class Wood : MonoBehaviour
 {
     [SerializeField] private AudioSource audioDeath;
-    [SerializeField] private GameObject Wood;
+    [SerializeField] private GameObject woodPiece;
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private ParticleSystem fxHit;
@@ -54,14 +53,14 @@ public class Tree : MonoBehaviour
 
             StartCoroutine(Death());
 
-            gameObject.GetComponent<Tree>().enabled = false;
+            gameObject.GetComponent<Wood>().enabled = false;
 
             IEnumerator Death()
             {
                 yield return new WaitForSeconds(5);
                 for (int i = 0; i < 3; i++)
                 {
-                    Instantiate(Wood, woodCell[i].position, Quaternion.Euler(new Vector3(0f, Random.Range(0, 180), 0f)));
+                    Instantiate(woodPiece, woodCell[i].position, Quaternion.Euler(new Vector3(0f, Random.Range(0, 180), 0f)));
                 }
                 GameObject Death = Instantiate(fxDeath, cellForFxDeath.position, Quaternion.identity);
                 audioDeath.Play();

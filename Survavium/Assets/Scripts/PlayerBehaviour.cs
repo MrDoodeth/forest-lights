@@ -2,11 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
-using UnityEditor;
-using Unity.VisualScripting;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Audio;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -188,7 +184,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         foreach (Collider tree in chopHit) 
         {
-            tree.GetComponent<Tree>().TakeDamage(Random.Range(25, 35), transform);
+            tree.GetComponent<Wood>().TakeDamage(Random.Range(25, 35), transform);
             source.PlayOneShot(audioChop[Random.Range(0, audioChop.Length)]);
             fxChop.Play();
         }

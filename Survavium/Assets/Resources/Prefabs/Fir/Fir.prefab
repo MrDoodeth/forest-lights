@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioDeath: {fileID: 7119492172278612380}
-  Wood: {fileID: 7566709920048700942, guid: 188957f47872a2e44af639f56ed1a1e9, type: 3}
+  woodPiece: {fileID: 7566709920048700942, guid: 188957f47872a2e44af639f56ed1a1e9, type: 3}
   animator: {fileID: 3486422757375806077}
   rb: {fileID: 2722376619463455478}
   fxHit: {fileID: 5050293497996056065}
