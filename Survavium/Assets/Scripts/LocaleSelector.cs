@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Rendering.Universal;
 
 public class LocaleSelector : MonoBehaviour
 {
