@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
-using System.Collections.Generic;
 
 public class _GameManager : MonoBehaviour
 {
@@ -260,17 +259,9 @@ public class _GameManager : MonoBehaviour
         EventBus.OnBearDied += AddBears;
         EventBus.OnCutSceneEnd += TheEnd;
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 40; i++)
         {            
             AddBear(ref i);
         }
-    }
-
-
-
-
-    void Update()
-    {
-
     }
 }
