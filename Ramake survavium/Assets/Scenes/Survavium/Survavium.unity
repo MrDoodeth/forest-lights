@@ -17094,6 +17094,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d4154ab39251b4e459f38ce24c1df638, type: 3}
     - target: {fileID: 7830670375333753049, guid: c6f81c497faf410438f526a280221521, type: 3}
+      propertyPath: sprintCost
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830670375333753049, guid: c6f81c497faf410438f526a280221521, type: 3}
       propertyPath: audioDamage
       value: 
       objectReference: {fileID: 8300000, guid: c8beb7867989c564ab5a46689173f3cb, type: 3}

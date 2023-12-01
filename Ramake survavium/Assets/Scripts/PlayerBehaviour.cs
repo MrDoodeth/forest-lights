@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private ParticleSystem fxChop;
 
     [Header("GUI")]
-    [SerializeField] private float sprintCost = -0.002f;
+    [SerializeField] private float sprintCost = -0.7f;
     [SerializeField] private Image progressBar_Stamina;
     [SerializeField] private Image progressBar_Altars;
     [SerializeField] private Image progressBar_Health;
@@ -462,7 +462,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    Stamina += sprintCost;
+                    Stamina -= sprintCost;
                     if (Stamina > 0.05)
                     {
                         Speed *= 1.6f;
@@ -475,13 +475,13 @@ public class PlayerBehaviour : MonoBehaviour
                 }
                 else
                 {
-                    Stamina -= sprintCost * 0.1f;
+                    Stamina += sprintCost * 0.2f;
                     animator.speed = 1f;
                 }
             }
             else
             {
-                Stamina -= sprintCost * 0.2f;
+                Stamina += sprintCost * 0.55f;
             }
         }
 

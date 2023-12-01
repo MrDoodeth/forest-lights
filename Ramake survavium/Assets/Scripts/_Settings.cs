@@ -57,13 +57,14 @@ public class _Settings : MonoBehaviour
 
         //resolutionDropdown.AddOptions(options);
         //resolutionDropdown.RefreshShownValue();
-        //LoadSettings(currentResolutionIndex);
+        LoadSettings();
     }
 
     private void OnEnable()
     {
         LoadSettings();
     }
+
 
     public void SetFullscreen(bool isFullscreen)
     {
