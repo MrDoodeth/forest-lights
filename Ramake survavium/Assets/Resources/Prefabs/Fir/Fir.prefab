@@ -144,7 +144,7 @@ MonoBehaviour:
   fxHit: {fileID: 5050293497996056065}
   fxDeath: {fileID: 8865057603187257739, guid: b82a1c9db70ccdb40b0814969f1cccfe, type: 3}
   cellForFxDeath: {fileID: 8971144167980081329}
-  maxHealth: 100
+  maxHealth: 90
   Force: 15
   down: {fileID: 3864046724471224943}
   woodCell:
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wood: {fileID: 7566709920048700942, guid: 188957f47872a2e44af639f56ed1a1e9, type: 3}
   Grass: {fileID: 1763123600351405006, guid: 907bcf4e012f8154c98baf3749e8d6b4, type: 3}
-  maxHealth: 90
+  maxHealth: 45
 --- !u!1 &4408831099655190689
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +581,6 @@ GameObject:
   - component: {fileID: 1756769282730263773}
   - component: {fileID: 8449487073927903071}
   - component: {fileID: 7290121005794886778}
-  - component: {fileID: 8753391911342742319}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -654,19 +653,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8753391911342742319
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7631558840076105734}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8752671404589073670
 GameObject:
   m_ObjectHideFlags: 0

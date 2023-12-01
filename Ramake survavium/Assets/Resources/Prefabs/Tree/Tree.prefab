@@ -234,7 +234,7 @@ MonoBehaviour:
   fxHit: {fileID: 5112798373073126407}
   fxDeath: {fileID: 8865057603187257739, guid: b82a1c9db70ccdb40b0814969f1cccfe, type: 3}
   cellForFxDeath: {fileID: 2677390010432135925}
-  maxHealth: 100
+  maxHealth: 90
   Force: 15
   down: {fileID: 8808632132323994402}
   woodCell:
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wood: {fileID: 7566709920048700942, guid: 188957f47872a2e44af639f56ed1a1e9, type: 3}
   Grass: {fileID: 1763123600351405006, guid: 907bcf4e012f8154c98baf3749e8d6b4, type: 3}
-  maxHealth: 100
+  maxHealth: 45
 --- !u!1001 &361638337254973293
 PrefabInstance:
   m_ObjectHideFlags: 0

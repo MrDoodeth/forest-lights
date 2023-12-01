@@ -60,6 +60,11 @@ public class _Settings : MonoBehaviour
         //LoadSettings(currentResolutionIndex);
     }
 
+    private void OnEnable()
+    {
+        LoadSettings();
+    }
+
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
@@ -135,33 +140,48 @@ public class _Settings : MonoBehaviour
     {
         //Quality
         if (PlayerPrefs.HasKey("QualitySettingPreference"))
+        {
             qualityDropdown.value = PlayerPrefs.GetInt("QualitySettingPreference");
+        }
         else
             qualityDropdown.value = 0;
+        SetQuality(qualityDropdown.value);
 
         //Fullscreen
         if (PlayerPrefs.HasKey("FullscreenPreference"))
+        {
             Screen.fullScreen = System.Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
+        }
         else
             Screen.fullScreen = true;
+        SetFullscreen(Screen.fullScreen);
 
         //MasterVolume
         if (PlayerPrefs.HasKey("VolumeMasterPreference"))
+        {
             masterVolumeSlider.value = PlayerPrefs.GetFloat("VolumeMasterPreference");
+        }
         else
             masterVolumeSlider.value = 0;
+        SetMasterVolume(masterVolumeSlider.value);
 
         //MusicVolume
         if (PlayerPrefs.HasKey("VolumeMusicPreference"))
+        {
             musicVolumeSlider.value = PlayerPrefs.GetFloat("VolumeMusicPreference");
+        }
         else
             musicVolumeSlider.value = 0;
+        SetMusicVolume(musicVolumeSlider.value);
 
         //EffectsVolume
         if (PlayerPrefs.HasKey("VolumeEffects"))
+        {
             effectVolume.isOn = System.Convert.ToBoolean(PlayerPrefs.GetInt("VolumeEffects"));
+        }
         else
             effectVolume.isOn = true;
+        SetEffects(effectVolume.isOn);
 
         //ShowTutorial
         if (PlayerPrefs.HasKey("ShowTutorial"))
@@ -173,12 +193,11 @@ public class _Settings : MonoBehaviour
         if (PlayerPrefs.HasKey("RenderScale"))
         {
             renderScaleSlider.value = PlayerPrefs.GetFloat("RenderScale");
-            SetRenderScale(renderScaleSlider.value);
         }
         else
         {
             renderScaleSlider.value = 1;
-            SetRenderScale(renderScaleSlider.value);
         }
+        SetRenderScale(renderScaleSlider.value);
     }
 }
