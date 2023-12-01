@@ -142,14 +142,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Die()
     {
-        isAlive = false;
         inPause.TransitionTo(0f);
-        //_rb.constraints = RigidbodyConstraints.None;
-        //gameObject.GetComponent<BoxCollider>().enabled = false;
         _rb.isKinematic = true;
         animator.SetBool("isDie", true);
-        transform.rotation = Quaternion.Lerp(transform.localRotation, Quaternion.AngleAxis(40, Vector3.right), 0.5f);
-        transform.position += Vector3.up * 0.1f;
+        transform.position += Vector3.up * 0.16f;
+        isAlive = false;
     }
 
     private void ShowLoseMenu()
@@ -509,6 +506,10 @@ public class PlayerBehaviour : MonoBehaviour
             if(isAlive)
             {
                 _rb.MovePosition(transform.position + Move * Time.fixedDeltaTime * Speed);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(90, 0, 0), 5f * Time.deltaTime);
             }
         }
     }
