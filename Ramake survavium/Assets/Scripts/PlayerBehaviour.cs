@@ -161,7 +161,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void GUI_Update()
     {
         killCounter = Mathf.Clamp(killCounter, 0, 1000);
-        killAmountCounter.text = killCounter.ToString();
+        killAmountCounter.text = $"SCORE: {killCounter}";
         woodAmount = Mathf.Clamp(woodAmount, 0, 10);
         woodAmountCounter.text = woodAmount.ToString();
         berryAmount = Mathf.Clamp(berryAmount, 0, 20);
