@@ -8,6 +8,7 @@ using UnityEditor;
 using Unity.VisualScripting;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Audio;
+using UnityEngine.Localization;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private ParticleSystem fxChop;
 
     [Header("GUI")]
+    [SerializeField] private LocalizedString scoreLoc;
     [SerializeField] private float sprintCost = -0.7f;
     [SerializeField] private Image progressBar_Stamina;
     [SerializeField] private Image progressBar_Altars;
@@ -84,6 +86,16 @@ public class PlayerBehaviour : MonoBehaviour
     private enum Platform { PC, Phone };
     private Vector3 Move = new Vector3();
 
+    private void OnEnable()
+    {
+        scoreLoc.Arguments = new object[] { killCounter };
+        scoreLoc.StringChanged += UpdateText;
+    }
+    
+    private void UpdateText(string text)
+    {
+        killAmountCounter.text = text;
+    }
     void OnDrawGizmos()
     {
         if (attackZone == null)
@@ -124,6 +136,7 @@ public class PlayerBehaviour : MonoBehaviour
         EventBus.OnBearDied -= BearDie;
         EventBus.OnPlayerDied -= Die;
         EventBus.OnPlayerRespawn -= Respawn;
+        scoreLoc.StringChanged -= UpdateText;
     }
     public void TakeDamage(float damage, Transform trans)
     {
@@ -176,7 +189,9 @@ public class PlayerBehaviour : MonoBehaviour
     private void GUI_Update()
     {
         killCounter = Mathf.Clamp(killCounter, 0, 1000);
-        killAmountCounter.text = $"SCORE: {killCounter}";
+        //killAmountCounter.text = $"SCORE: {killCounter}";
+        scoreLoc.Arguments[0] = killCounter;
+        scoreLoc.RefreshString();
         woodAmount = Mathf.Clamp(woodAmount, 0, 10);
         woodAmountCounter.text = woodAmount.ToString();
         berryAmount = Mathf.Clamp(berryAmount, 0, 20);

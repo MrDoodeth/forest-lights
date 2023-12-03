@@ -24,7 +24,7 @@ public class _GameManager : MonoBehaviour
     private void OnDestroy()
     {
         EventBus.OnBearDied -= AddBear;
-        EventBus.OnCutSceneEnd -= TheEnd;
+        //EventBus.OnCutSceneEnd -= TheEnd;
     }
 
     private int numberAltar = 17;
@@ -89,13 +89,13 @@ public class _GameManager : MonoBehaviour
         }
     }
 
-    private void TheEnd()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            AddBear(ref i);
-        }
-    }
+    //private void TheEnd()
+    //{
+    //    for (int i = 0; i < 2; i++)
+    //    {
+    //        AddBear(ref i);
+    //    }
+    //}
     private GameObject AddGrass(int _i, int _j)
     {
         GameObject Grass;
@@ -257,9 +257,9 @@ public class _GameManager : MonoBehaviour
         surface = GetComponent<NavMeshSurface>();
         surface.BuildNavMesh();
         EventBus.OnBearDied += AddBears;
-        EventBus.OnCutSceneEnd += TheEnd;
+        //EventBus.OnCutSceneEnd += TheEnd;
 
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 36; i++)
         {            
             AddBear(ref i);
         }

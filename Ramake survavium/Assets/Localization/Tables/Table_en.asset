@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 944a924f1b3fbc74792f589187783f34, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4382197133130858499
   m_TableData:
   - m_Id: 11419923451904
     m_Localized: PLAY
@@ -95,7 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27845333815296
-    m_Localized: Congratulations! You passed the game! Thank you for your patience!
+    m_Localized: Congratulations! You passed the game! Thank you for playing!
     m_Metadata:
       m_Items: []
   - m_Id: 28829955067904
@@ -146,6 +147,19 @@ MonoBehaviour:
     m_Localized: PROGRESS WILL NOT BE SAVED! CONTINUE?
     m_Metadata:
       m_Items: []
+  - m_Id: 39243154884071424
+    m_Localized: CONTINUE?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39243746238992384
+    m_Localized: 'SCORE: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4382197133130858499
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4382197133130858499
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00103bb2fa6b8b00
