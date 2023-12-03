@@ -14,4 +14,6 @@ public class EventBus : MonoBehaviour
     public static Action OnCutSceneEnd;
 
     public static Action OnEnd;
+
+    public static Action OnPlayerRespawn;
 }

@@ -38,6 +38,7 @@ public class BearAI : MonoBehaviour
     private void Start()
     {
         EventBus.OnPlayerDied += BearDeactivate;
+        EventBus.OnPlayerRespawn += BearActivate;
         EventBus.OnEnd += CutScene;
         player = GameObject.Find("Man").transform;
         agent = GetComponent<NavMeshAgent>();
@@ -49,11 +50,17 @@ public class BearAI : MonoBehaviour
     private void OnDestroy()
     {
         EventBus.OnPlayerDied -= BearDeactivate;
+        EventBus.OnPlayerRespawn -= BearActivate;
         EventBus.OnEnd -= CutScene;
     }
     private void BearDeactivate()
     {
         isAlive = false;
+    }
+
+    private void BearActivate()
+    {
+        isAlive = true;
     }
 
     private void CutScene()

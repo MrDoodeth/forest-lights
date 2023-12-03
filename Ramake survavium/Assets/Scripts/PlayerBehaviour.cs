@@ -123,14 +123,14 @@ public class PlayerBehaviour : MonoBehaviour
         EventBus.OnExitActivated -= CheckExit;
         EventBus.OnBearDied -= BearDie;
         EventBus.OnPlayerDied -= Die;
+        EventBus.OnPlayerRespawn -= Respawn;
     }
     public void TakeDamage(float damage, Transform trans)
     {
         currentHealth -= damage;
 
         if (currentHealth <= 0)
-        {
-            source.PlayOneShot(loseSound);
+        {           
             EventBus.OnPlayerDied?.Invoke();
         }
         else
@@ -142,11 +142,26 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Die()
     {
+        source.PlayOneShot(loseSound);
+        _rb = GetComponent<Rigidbody>();
+        EventBus.OnPlayerDied -= Die;
         inPause.TransitionTo(0f);
         _rb.isKinematic = true;
         animator.SetBool("isDie", true);
-        transform.position += Vector3.up * 0.16f;
+        //transform.position += Vector3.up * 0.16f;
         isAlive = false;
+    }
+
+    public void Respawn()
+    {
+        EventBus.OnPlayerDied += Die;
+        outPause.TransitionTo(0f);
+        _rb.isKinematic = false;
+        animator.SetBool("isDie", false);
+        transform.localRotation = Quaternion.identity;
+        transform.position = new Vector3(67f, 0.0777f, 61f);
+        currentHealth = maxHealth;
+        isAlive = true;
     }
 
     private void ShowLoseMenu()
@@ -320,6 +335,10 @@ public class PlayerBehaviour : MonoBehaviour
         winPanel.SetActive(true);
     }
 
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -328,6 +347,7 @@ public class PlayerBehaviour : MonoBehaviour
         EventBus.OnExitActivated += CheckExit;
         EventBus.OnBearDied += BearDie;
         EventBus.OnPlayerDied += Die;
+        EventBus.OnPlayerRespawn += Respawn;
         currentHealth = maxHealth;
         woodAmount = 0;
         berryAmount = 0;
