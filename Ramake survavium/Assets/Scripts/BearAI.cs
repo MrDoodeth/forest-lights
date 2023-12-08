@@ -165,7 +165,6 @@ public class BearAI : MonoBehaviour
         {
             //attack
             animator.SetTrigger("isAttacking");
-            Debug.Log("Attack");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttack);
         }

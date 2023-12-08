@@ -20,6 +20,4 @@ public class ShowTutorial : MonoBehaviour
             Cross.SetActive(true);
         }
     }
-
-
 }

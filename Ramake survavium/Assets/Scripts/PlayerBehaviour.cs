@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
+using UnityEngine.Analytics;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -36,7 +37,11 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float rotSpeed = 1f;
     [SerializeField] private Transform target;
     [SerializeField] private Transform Bug;
-    [SerializeField] private FixedJoystick joystick;
+    [SerializeField] private FixedJoystick joystickMovement;
+    [SerializeField] private FixedJoystick joystickAttack;
+    [SerializeField] private Button fireButton;
+    [SerializeField] private Button pickUpButton;
+    [SerializeField] private Button HealButton;
 
     [Header("Hit")]
     [SerializeField] private float attackRange = 0.5f;
@@ -86,21 +91,10 @@ public class PlayerBehaviour : MonoBehaviour
     private enum Platform { PC, Phone };
     private Vector3 Move = new Vector3();
 
-    private void OnEnable()
-    {
-        scoreLoc.Arguments = new object[] { killCounter };
-        scoreLoc.StringChanged += UpdateText;
-    }
     
     private void UpdateText(string text)
     {
         killAmountCounter.text = text;
-    }
-    void OnDrawGizmos()
-    {
-        if (attackZone == null)
-            return;
-        Gizmos.DrawWireSphere(attackZone.position, attackRange);
     }
 
     public void PauseButton()
@@ -130,14 +124,6 @@ public class PlayerBehaviour : MonoBehaviour
         menuPanel.SetActive(false);
     }
 
-    private void OnDestroy()
-    {
-        EventBus.OnExitActivated -= CheckExit;
-        EventBus.OnBearDied -= BearDie;
-        EventBus.OnPlayerDied -= Die;
-        EventBus.OnPlayerRespawn -= Respawn;
-        scoreLoc.StringChanged -= UpdateText;
-    }
     public void TakeDamage(float damage, Transform trans)
     {
         currentHealth -= damage;
@@ -152,7 +138,6 @@ public class PlayerBehaviour : MonoBehaviour
             _rb.AddForce((transform.position - trans.position) * 15, ForceMode.Impulse);
         }
     }
-
     private void Die()
     {
         source.PlayOneShot(loseSound);
@@ -161,10 +146,8 @@ public class PlayerBehaviour : MonoBehaviour
         inPause.TransitionTo(0f);
         _rb.isKinematic = true;
         animator.SetBool("isDie", true);
-        //transform.position += Vector3.up * 0.16f;
         isAlive = false;
     }
-
     public void Respawn()
     {
         EventBus.OnPlayerDied += Die;
@@ -176,7 +159,6 @@ public class PlayerBehaviour : MonoBehaviour
         currentHealth = maxHealth;
         isAlive = true;
     }
-
     private void ShowLoseMenu()
     {
         losePanel.SetActive(true);
@@ -202,7 +184,6 @@ public class PlayerBehaviour : MonoBehaviour
         progressBar_Health.fillAmount = currentHealth;
 
     }
-
     private void BearDie()
     {
         killCounter++;
@@ -235,15 +216,16 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void Hit()
     {
-        if (Stamina > 0.125)
+        if (Stamina > 0.125 && Time.time >= nextHitTime)
         {
             animator.SetTrigger("isHit");
-            Stamina -= 0.125f;
+            Stamina -= 0.11f;
+            nextHitTime = Time.time + 1 / hitRate;
         }
     }
-    private void SelectionOfBerries()
+    public void SelectionOfBerries()
     {
-        if (berryAmount < 20)
+        if (berryAmount < 20 && Time.time >= nextSelectionTime)
         {
             Collider[] selectionBerry = Physics.OverlapSphere(attackZone.position, attackRange, berryLayer);
             foreach (Collider Bush in selectionBerry)
@@ -269,21 +251,22 @@ public class PlayerBehaviour : MonoBehaviour
                     }
                 }
             }
+            nextSelectionTime = Time.time + 1 / selectionRate;
         }          
     }
-
-    private void Heal()
+    public void Heal()
     {
-        if (currentHealth < 1 && berryAmount > 0)
+        if (currentHealth < 1 && berryAmount > 0 && Time.time >= nextHitTime)
         {
             source.PlayOneShot(audioEat[Random.Range(0, audioEat.Length)]);
             berryAmount -= 1;
             currentHealth += 0.3f;
+            nextHitTime = Time.time + 1 / hitRate;
         }
     }
-    private void LightAltar()
+    public void LightAltar()
     {
-        if (woodAmount > 9)
+        if (woodAmount > 9 && Time.time >= nextSelectionTime)
         {
             Collider[] Altar = Physics.OverlapSphere(attackZone.position, attackRange, altarLayer);
             foreach (Collider altar in Altar)
@@ -303,9 +286,9 @@ public class PlayerBehaviour : MonoBehaviour
                     _rb.isKinematic = false;
                 }
             }
+            nextSelectionTime = Time.time + 1 / selectionRate;
         }
     }
-
     private void CheckExit()
     {
         if (altarCounter >= 1)
@@ -323,6 +306,24 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    private void Win()
+    {
+        source.pitch = 1;
+        source.PlayOneShot(winSound);
+        Time.timeScale = 0f;
+        winPanel.SetActive(true);
+    }
+    private Vector3 VectorFix(float hIn, float vIn)
+    {
+        Vector3 VInput = new Vector3(vIn, 0, vIn);
+        Vector3 HInput = new Vector3(hIn, 0, -hIn);
+
+        Vector3 Direction = VInput + HInput;
+
+        Direction.x = Mathf.Clamp(Direction.x, -1, 1);
+        Direction.z = Mathf.Clamp(Direction.z, -1, 1);
+        return Direction;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wood")
@@ -341,13 +342,18 @@ public class PlayerBehaviour : MonoBehaviour
             Win();
         }
     }
-
-    private void Win()
+    void OnDrawGizmos()
     {
-        source.pitch = 1;
-        source.PlayOneShot(winSound);
-        Time.timeScale = 0f;
-        winPanel.SetActive(true);
+        if (attackZone == null)
+            return;
+        Gizmos.DrawWireSphere(attackZone.position, attackRange);
+    }
+
+
+    private void OnEnable()
+    {
+        scoreLoc.Arguments = new object[] { killCounter };
+        scoreLoc.StringChanged += UpdateText;
     }
 
     private void Awake()
@@ -356,7 +362,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         EventBus.OnExitActivated += CheckExit;
@@ -368,11 +373,36 @@ public class PlayerBehaviour : MonoBehaviour
         berryAmount = 0;
         Stamina = 1f;
         altarCounter = 0.0625f * 0f;
+        
+
+        if (platform == Platform.PC)
+        {
+            joystickMovement.gameObject.SetActive(false);
+            joystickAttack.gameObject.SetActive(false);
+            fireButton.gameObject.SetActive(false);
+            pickUpButton.gameObject.SetActive(false);
+            HealButton.gameObject.SetActive(false);
+        }
     }
-
-
+  
+    private void OnDestroy()
+    {
+        EventBus.OnExitActivated -= CheckExit;
+        EventBus.OnBearDied -= BearDie;
+        EventBus.OnPlayerDied -= Die;
+        EventBus.OnPlayerRespawn -= Respawn;
+        scoreLoc.StringChanged -= UpdateText;
+    }
     void Update()
     {
+        GUI_Update();
+
+        //// #Console command
+        //if (Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.N))
+        //{
+        //    CheckExit();
+        //}
+
         void Rotate()
         {
             Vector3 direction = new Vector3(target.position.x - transform.position.x, 0f, target.position.z - transform.position.z);
@@ -380,20 +410,22 @@ public class PlayerBehaviour : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, _rotation, rotSpeed * Time.deltaTime);
         }
 
-        GUI_Update();
 
         if (platform == Platform.PC)
         {
-            joystick.gameObject.SetActive(false);
             vInput = Input.GetAxis("Vertical");
             hInput = Input.GetAxis("Horizontal");
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseButton();
+            }
         }
 
         if (platform == Platform.Phone)
         {
-            joystick.gameObject.SetActive(true);
-            vInput = joystick.Vertical;
-            hInput = joystick.Horizontal;
+            vInput = joystickMovement.Vertical;
+            hInput = joystickMovement.Horizontal;
         }
 
         Speed = moveSpeed;
@@ -405,114 +437,135 @@ public class PlayerBehaviour : MonoBehaviour
             Speed *= 0.6f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseButton();
-        }
         if (isAlive)
         {
             if (Move != Vector3.zero)
             {
                 isMove = 1f;
 
-                if (Time.time >= nextHitTime)
+                if (platform == Platform.PC)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
                         Hit();
-                        nextHitTime = Time.time + 1 / hitRate;
+                    }
+
+                    if (Input.GetMouseButton(1))
+                    {
+                        Speed *= 0.6f;
+                        Rotate();
+                    }
+                    else
+                    {
+                        Quaternion rotation = Quaternion.LookRotation(Move);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
                     }
                 }
 
-                if (Input.GetMouseButton(1))
+                if (platform == Platform.Phone)
                 {
-                    Speed *= 0.6f;
-                    Rotate();
-                }
-                else
-                {
-                    Quaternion rotation = Quaternion.LookRotation(Move);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
-                }
+                    if (joystickAttack.Vertical != 0 || joystickAttack.Horizontal != 0)
+                    {
+                        Speed *= 0.6f;
+                        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(new Vector3(joystickAttack.Horizontal, 0, joystickAttack.Vertical)), rotSpeed * Time.deltaTime);
+
+                        Hit();
+                    }
+                    else
+                    {
+                        Quaternion rotation = Quaternion.LookRotation(Move);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
+                    }
+                }               
             }
             else
             {
                 isMove = 0f;
-
-                if (Input.GetMouseButton(1))
+                if (platform == Platform.PC)
                 {
-                    Rotate();
+                    if (Input.GetMouseButton(1))
+                    {
+                        Rotate();
+                    }
                 }
 
-                if (Time.time >= nextHitTime)
+                if (platform == Platform.PC)
                 {
                     if (Input.GetMouseButton(0))
                     {
                         Hit();
-                        nextHitTime = Time.time + 1 / hitRate;
                     }
                 }
 
-                if (Time.time >= nextSelectionTime)
+                if (platform == Platform.Phone) 
                 {
-                    if (Input.GetKeyDown(KeyCode.Q))
+                    if (joystickAttack.Vertical != 0 || joystickAttack.Horizontal != 0)
                     {
-                        Heal();
-                        nextSelectionTime = Time.time + 1 / selectionRate;
+                        Speed *= 0.6f;
+                        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(VectorFix(joystickAttack.Horizontal, joystickAttack.Vertical)), rotSpeed * Time.deltaTime);
+
+                        Hit();
                     }
                 }
 
-                //selectBerries
+                if (platform == Platform.PC)
                 {
-                    if (Time.time >= nextSelectionTime)
+                    //selectBerries
                     {
+
                         if (Input.GetKeyDown(KeyCode.E))
                         {
                             SelectionOfBerries();
-                            nextSelectionTime = Time.time + 1 / selectionRate;
                         }
                     }
-                }
-                //light up
-                {
-                    if (Time.time >= nextHitTime)
+                    //light up
                     {
                         if (Input.GetKeyDown(KeyCode.F))
                         {
                             LightAltar();
-                            nextHitTime = Time.time + 1 / hitRate;
                         }
                     }
+
+                    if (Input.GetKeyDown(KeyCode.Q))
+                    {
+                        Heal();
+                    }
                 }
+                
             }
         }      
     }
 
+    public void Run(bool isRun)
+    {
+
+        if (isRun)
+        {
+            Stamina -= sprintCost;
+            if (Stamina > 0.05)
+            {
+                Speed *= 1.6f;
+                animator.speed = 1.6f;
+            }
+            else
+            {
+                animator.speed = 1f;
+            }
+        }
+        else
+        {
+            Stamina += sprintCost * 0.2f;
+            animator.speed = 1f;
+        }
+    }
     void FixedUpdate()
     {
         if (isAlive)
         //sprint
-        {           
+        {
             if (Move != Vector3.zero)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    Stamina -= sprintCost;
-                    if (Stamina > 0.05)
-                    {
-                        Speed *= 1.6f;
-                        animator.speed = 1.6f;
-                    }
-                    else
-                    {
-                        animator.speed = 1f;
-                    }
-                }
-                else
-                {
-                    Stamina += sprintCost * 0.2f;
-                    animator.speed = 1f;
-                }
+                Run(Input.GetKey(KeyCode.LeftShift));
             }
             else
             {
@@ -522,20 +575,14 @@ public class PlayerBehaviour : MonoBehaviour
 
         //movement
         {
-            Vector3 VInput = new Vector3(vInput, 0, vInput);
-            Vector3 HInput = new Vector3(hInput, 0, -hInput);
-
-            Vector3 Direction = VInput + HInput;
-
-            Direction.x = Mathf.Clamp(Direction.x, -1, 1);
-            Direction.z = Mathf.Clamp(Direction.z, -1, 1);
+            
             if ((vInput == 1f || vInput == -1f) || (hInput == 1f || hInput == -1f))
             {
-                Move = Vector3.Normalize(Direction);
+                Move = Vector3.Normalize(VectorFix(hInput, vInput));
             }
             else
             {
-                Move = Direction;
+                Move = VectorFix(hInput, vInput);
             }
 
             if(isAlive)
