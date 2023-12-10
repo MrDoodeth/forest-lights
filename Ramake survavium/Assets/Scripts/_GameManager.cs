@@ -20,15 +20,13 @@ public class _GameManager : MonoBehaviour
     private Transform _PlayerTransform;
     private GameObject[,] tileArray;
 
-    private int numberAltar = 17;
+    private int numberAltar = 9;
 
 
     private void OnDestroy()
     {
         EventBus.OnBearDied -= AddBear;
     }
-
-    
 
     private Quaternion RandomRotation()
     {
@@ -49,44 +47,14 @@ public class _GameManager : MonoBehaviour
         return Quaternion.Euler(0f, Y, 0f);
     }
 
-    private void AddBear(ref int _i)
-    {
-        float randomZ = Random.Range(2, 70) * 1.6f;
-        float randomX = Random.Range(2, 70) * 1.6f;
-        Vector3 spawnPoint = new Vector3(randomX, 1f, randomZ);
-        int h = (int)(randomX / 1.6f);
-        int w = (int)(randomZ / 1.6f);
-        if (tileArray[h, w].gameObject.tag == "Ground")
-        {
-            Instantiate(_Bear, spawnPoint, Quaternion.identity);
-        }
-        else
-        {
-            _i--;
-        }
-    }
-
     private void AddBear()
     {        
-        float randomZ = Random.Range(2, 70) * 1.6f;
-        float randomX = Random.Range(2, 70) * 1.6f;
+        float randomZ = Random.Range(2, 30) * 1.6f;
+        float randomX = Random.Range(2, 30) * 1.6f;
         Vector3 spawnPoint = new Vector3(randomX, 1f, randomZ);
         int h = (int)(randomX / 1.6f);
         int w = (int)(randomZ / 1.6f);
         Instantiate(_Bear, spawnPoint, Quaternion.identity);
-    }
-
-    private void AddBears()
-    {
-        for (int i = 0; i < 3; i++) 
-        {
-            float randomZ = Random.Range(2, 70) * 1.6f;
-            float randomX = Random.Range(2, 70) * 1.6f;
-            Vector3 spawnPoint = new Vector3(randomX, 1f, randomZ);
-            int h = (int)(randomX / 1.6f);
-            int w = (int)(randomZ / 1.6f);
-            Instantiate(_Bear, spawnPoint, Quaternion.identity);
-        }
     }
 
     private GameObject AddGrass(int _i, int _j)
@@ -246,12 +214,12 @@ public class _GameManager : MonoBehaviour
     private void Awake()
     {        
         _PlayerTransform = _Player.GetComponent<Transform>();
-        AddObjects(80,80);
+        AddObjects(40,40);
         surface = GetComponent<NavMeshSurface>();
         surface.BuildNavMesh();
-        EventBus.OnBearDied += AddBears;
+        EventBus.OnBearDied += AddBear;
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 20; i++)
         {            
             AddBear();
         }

@@ -150,7 +150,7 @@ public class PlayerBehaviour : MonoBehaviour
         _rb.isKinematic = false;
         animator.SetBool("isDie", false);
         transform.localRotation = Quaternion.identity;
-        transform.position = new Vector3(67f, 0.0777f, 61f);
+        transform.position = new Vector3(34f, 0.0777f, 32f);
         currentHealth = maxHealth;
         isAlive = true;
     }
@@ -166,7 +166,6 @@ public class PlayerBehaviour : MonoBehaviour
     private void GUI_Update()
     {
         killCounter = Mathf.Clamp(killCounter, 0, 1000);
-        //killAmountCounter.text = $"SCORE: {killCounter}";
         scoreLoc.Arguments[0] = killCounter;
         scoreLoc.RefreshString();
         woodAmount = Mathf.Clamp(woodAmount, 0, 10);
@@ -277,7 +276,7 @@ public class PlayerBehaviour : MonoBehaviour
                     Bug.localScale = new Vector3(100, 100, 100);
                     woodAmount -= 10;
                     yield return new WaitForSeconds(0.6f);
-                    altarCounter += 0.0625f;
+                    altarCounter += 0.125f;
                     _rb.isKinematic = false;
                 }
             }
@@ -367,7 +366,7 @@ public class PlayerBehaviour : MonoBehaviour
         woodAmount = 0;
         berryAmount = 0;
         Stamina = 1f;
-        altarCounter = 0.0625f * 0f;
+        altarCounter = 0.125f * 0f;
 
         if (platform == Platform.PC)
         {
@@ -389,15 +388,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
-        if (platform == Platform.PC)
-        {
-            joystickMovement.gameObject.SetActive(false);
-            joystickAttack.gameObject.SetActive(false);
-            fireButton.gameObject.SetActive(false);
-            pickUpButton.gameObject.SetActive(false);
-            HealButton.gameObject.SetActive(false);
-        }
-
         GUI_Update();
 
         //// #Console command
