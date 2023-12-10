@@ -58,7 +58,7 @@ public class Tree : MonoBehaviour
 
             IEnumerator Death()
             {
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2.5f);
                 for (int i = 0; i < 3; i++)
                 {
                     Instantiate(Wood, woodCell[i].position, Quaternion.Euler(new Vector3(0f, Random.Range(0, 180), 0f)));

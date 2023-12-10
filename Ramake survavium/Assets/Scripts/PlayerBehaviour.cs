@@ -2,19 +2,15 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
-using UnityEditor;
-using Unity.VisualScripting;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
-using UnityEngine.Analytics;
+using Platforms;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    [SerializeField] private Platform platform;
+    [SerializeField] public Platform platform;
 
     [Header("Audio")]
     [SerializeField] private AudioMixerSnapshot inPause;
@@ -88,7 +84,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private float Speed;
     private Rigidbody _rb;
-    private enum Platform { PC, Phone };
     private Vector3 Move = new Vector3();
 
     
@@ -373,7 +368,6 @@ public class PlayerBehaviour : MonoBehaviour
         berryAmount = 0;
         Stamina = 1f;
         altarCounter = 0.0625f * 0f;
-        
 
         if (platform == Platform.PC)
         {
@@ -395,6 +389,15 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
+        if (platform == Platform.PC)
+        {
+            joystickMovement.gameObject.SetActive(false);
+            joystickAttack.gameObject.SetActive(false);
+            fireButton.gameObject.SetActive(false);
+            pickUpButton.gameObject.SetActive(false);
+            HealButton.gameObject.SetActive(false);
+        }
+
         GUI_Update();
 
         //// #Console command
@@ -467,7 +470,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (joystickAttack.Vertical != 0 || joystickAttack.Horizontal != 0)
                     {
                         Speed *= 0.6f;
-                        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(new Vector3(joystickAttack.Horizontal, 0, joystickAttack.Vertical)), rotSpeed * Time.deltaTime);
+                        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(VectorFix(joystickAttack.Horizontal, joystickAttack.Vertical)), rotSpeed * Time.deltaTime);
 
                         Hit();
                     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
+using Platforms;
 
 public class _GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class _GameManager : MonoBehaviour
     private Transform _PlayerTransform;
     private GameObject[,] tileArray;
 
+    private int numberAltar = 17;
 
 
     private void OnDestroy()
@@ -26,8 +28,7 @@ public class _GameManager : MonoBehaviour
         EventBus.OnBearDied -= AddBear;
     }
 
-    private int numberAltar = 17;
-
+    
 
     private Quaternion RandomRotation()
     {
@@ -253,6 +254,20 @@ public class _GameManager : MonoBehaviour
         for (int i = 0; i < 30; i++)
         {            
             AddBear();
+        }
+
+        var _player = GameObject.Find("Man")?.GetComponent<PlayerBehaviour>();
+
+        //Platform
+        if (PlayerPrefs.HasKey("Platform"))
+        {
+            if (_player is not null)
+                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");
+        }
+        else
+        {
+            if (_player is not null)
+                _player.platform = Platform.PC;
         }
     }
 }

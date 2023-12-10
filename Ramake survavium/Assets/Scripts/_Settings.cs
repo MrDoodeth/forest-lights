@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Platforms;
 
 public class _Settings : MonoBehaviour
 {
+    [SerializeField] private PlayerBehaviour _player;
+
     [SerializeField] private GameObject panelSettings;
     [SerializeField] private GameObject menu;
     [SerializeField] private AudioMixer audioMixer;
@@ -38,8 +37,9 @@ public class _Settings : MonoBehaviour
         menu.SetActive(true);
     }
 
-    void Start()
+    private void Awake()
     {
+        _player = GameObject.Find("Man")?.GetComponent<PlayerBehaviour>();
         SetMasterVolume(PlayerPrefs.GetFloat("VolumeMasterPreference"));
         SetMusicVolume(PlayerPrefs.GetFloat("VolumeMusicPreference"));
         //resolutionDropdown.ClearOptions();
@@ -64,6 +64,7 @@ public class _Settings : MonoBehaviour
     {
         LoadSettings();
     }
+
 
 
     public void SetFullscreen(bool isFullscreen)
@@ -125,6 +126,10 @@ public class _Settings : MonoBehaviour
         }
     }
 
+    public void SetPlatform(int platformIndex)
+    {
+        PlayerPrefs.SetInt("Platform", platformIndex);
+    }
 
     public void SaveSettings()
     {
@@ -186,9 +191,17 @@ public class _Settings : MonoBehaviour
 
         //ShowTutorial
         if (PlayerPrefs.HasKey("ShowTutorial"))
+        {
             showTutorial.isOn = System.Convert.ToBoolean(PlayerPrefs.GetInt("ShowTutorial"));
+            if (PlayerPrefs.GetInt("Platform") == (int)Platform.Phone)
+            {
+                showTutorial.isOn = false;
+            }
+        }
         else
+        {
             showTutorial.isOn = true;
+        }
 
         //RenderScale
         if (PlayerPrefs.HasKey("RenderScale"))
@@ -200,5 +213,22 @@ public class _Settings : MonoBehaviour
             renderScaleSlider.value = 1;
         }
         SetRenderScale(renderScaleSlider.value);
+
+        if (_player is not null)
+        {
+            _player.platform = (Platform)PlayerPrefs.GetInt("Platform");
+        }
+
+        //Platform
+        if (PlayerPrefs.HasKey("Platform"))
+        {
+            if (_player is not null)
+                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");               
+        }
+        else
+        {
+            if (_player is not null)
+                _player.platform = Platform.PC;              
+        }
     }
 }
