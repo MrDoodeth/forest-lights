@@ -150,7 +150,7 @@ public class BearAI : MonoBehaviour
             source.PlayOneShot(audioRumble_Idle[Random.Range(0, audioRumble_Idle.Length)]);
             timer = 0f;
         }
-        agent.SetDestination(player.position);
+        agent?.SetDestination(player.position);
         animator.SetBool("isPatrolling", true);
         animator.SetBool("isChasing", true);
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using Platforms;
+using System.Collections.Generic;
 
 public class _GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class _GameManager : MonoBehaviour
     private NavMeshSurface surface;
     private Transform _PlayerTransform;
     private GameObject[,] tileArray;
+    private List<Transform> freeTileList = new List<Transform>();
 
     private int numberAltar = 9;
 
@@ -48,12 +50,15 @@ public class _GameManager : MonoBehaviour
     }
 
     private void AddBear()
-    {        
-        float randomZ = Random.Range(2, 30) * 1.6f;
-        float randomX = Random.Range(2, 30) * 1.6f;
-        Vector3 spawnPoint = new Vector3(randomX, 1f, randomZ);
-        int h = (int)(randomX / 1.6f);
-        int w = (int)(randomZ / 1.6f);
+    {
+        //float randomZ = Random.Range(2, 30) * 1.6f;
+        //float randomX = Random.Range(2, 30) * 1.6f;
+        //Vector3 spawnPoint = new Vector3(randomX, 1f, randomZ);
+        //int h = (int)(randomX / 1.6f);
+        //int w = (int)(randomZ / 1.6f);
+        //Instantiate(_Bear, spawnPoint, Quaternion.identity);
+        Vector3 spawnPoint = freeTileList[Random.Range(0, freeTileList.Count)].position;
+        spawnPoint.y += 0.1f;
         Instantiate(_Bear, spawnPoint, Quaternion.identity);
     }
 
@@ -112,6 +117,7 @@ public class _GameManager : MonoBehaviour
                 Ground = AddFlowers(_i, _j, _Flowers2);
                 break;
         }
+        freeTileList.Add(Ground.transform);
         return Ground;
     }
 

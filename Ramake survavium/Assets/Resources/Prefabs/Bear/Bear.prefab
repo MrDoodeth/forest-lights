@@ -549,7 +549,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   timeBetweenAttack: 1.2
-  sightRange: 10
+  sightRange: 6
   attackRange: 0.84
   maxHealth: 100
   source: {fileID: 8967150483444557629}
