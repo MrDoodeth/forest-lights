@@ -17822,7 +17822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleRange: 1
-  deadZone: 0
+  deadZone: 0.7
   axisOptions: 0
   snapX: 0
   snapY: 0
@@ -17993,7 +17993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleRange: 1
-  deadZone: 0
+  deadZone: 0.8
   axisOptions: 0
   snapX: 0
   snapY: 0
