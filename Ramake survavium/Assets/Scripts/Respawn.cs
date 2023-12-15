@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 public class Respawn : MonoBehaviour
 {
@@ -11,12 +12,22 @@ public class Respawn : MonoBehaviour
 
     private void OnEnable()
     {
+        YandexGame.RewardVideoEvent += Reward;
         addImage.fillAmount = 1; 
         closeButton.GetComponent<Animation>().Play();
     }
+
+    private void OnDisable()
+    {
+        YandexGame.RewardVideoEvent -= Reward;
+    }
     public void RespawnReward()
     {
-        //Show ad
+        YandexGame.RewVideoShow(1);
+    }
+
+    public void Reward(int id)
+    {
         EventBus.OnPlayerRespawn?.Invoke();
         losePanel.SetActive(false);
     }

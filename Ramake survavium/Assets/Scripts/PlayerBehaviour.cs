@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
 using Platforms;
+using YG;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -94,15 +95,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void PauseButton()
     {
-        isPause = !isPause;
-        if (isPause)
-        {
-            PauseOn();
-        }
-        else
-        {
-            PauseOff();
-        }
+        isPause = !isPause;       
     }
     private void PauseOn()
     {
@@ -356,6 +349,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Start()
     {
+        YandexGame.FullscreenShow();
         animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         EventBus.OnExitActivated += CheckExit;
@@ -388,6 +382,18 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
+        if (isPause)
+        {
+            PauseOn();
+        }
+        else
+        {
+            PauseOff();
+        }
+
+
+        YandexGame.FullscreenShow();
+
         GUI_Update();
 
         //// #Console command
