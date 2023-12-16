@@ -144,7 +144,7 @@ MonoBehaviour:
   fxHit: {fileID: 5050293497996056065}
   fxDeath: {fileID: 8865057603187257739, guid: b82a1c9db70ccdb40b0814969f1cccfe, type: 3}
   cellForFxDeath: {fileID: 8971144167980081329}
-  maxHealth: 90
+  maxHealth: 145
   Force: 15
   down: {fileID: 3864046724471224943}
   woodCell:

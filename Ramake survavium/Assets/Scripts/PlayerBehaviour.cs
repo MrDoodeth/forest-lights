@@ -36,6 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Transform Bug;
     [SerializeField] private FixedJoystick joystickMovement;
     [SerializeField] private FixedJoystick joystickAttack;
+    [SerializeField] private Button attackButton;
     [SerializeField] private Button fireButton;
     [SerializeField] private Button pickUpButton;
     [SerializeField] private Button HealButton;
@@ -95,7 +96,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void PauseButton()
     {
-        isPause = !isPause;       
+        isPause = !isPause;
+        if (isPause)
+        {
+            PauseOn();
+        }
+        else
+        {
+            PauseOff();
+        }
     }
     private void PauseOn()
     {
@@ -201,7 +210,7 @@ public class PlayerBehaviour : MonoBehaviour
             source.PlayOneShot(audioKnock);
         }
     }
-    private void Hit()
+    public void Hit()
     {
         if (Stamina > 0.125 && Time.time >= nextHitTime)
         {
@@ -366,6 +375,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             joystickMovement.gameObject.SetActive(false);
             joystickAttack.gameObject.SetActive(false);
+            attackButton.gameObject.SetActive(false);
             fireButton.gameObject.SetActive(false);
             pickUpButton.gameObject.SetActive(false);
             HealButton.gameObject.SetActive(false);
@@ -382,17 +392,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
-        if (isPause)
-        {
-            PauseOn();
-        }
-        else
-        {
-            PauseOff();
-        }
-
-
-        YandexGame.FullscreenShow();
 
         GUI_Update();
 
