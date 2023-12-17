@@ -1,20 +1,24 @@
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 using YG;
 
 public class Respawn : MonoBehaviour
 {
-    [SerializeField] private Image addImage;
+    [SerializeField] private Image adImage;
     [SerializeField] private GameObject quitPanel;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject closeButton;
     private bool isDestroed = false;
+    private bool isPressed = false;
 
     private void OnEnable()
     {
         YandexGame.RewardVideoEvent += Reward;
-        addImage.fillAmount = 1; 
+        adImage.fillAmount = 1;
         closeButton.GetComponent<Animation>().Play();
+        adImage.GetComponent<Button>().enabled = true;
+        isPressed = false;
     }
 
     private void OnDisable()
@@ -23,6 +27,8 @@ public class Respawn : MonoBehaviour
     }
     public void RespawnReward()
     {
+        isPressed = true;
+        adImage.fillAmount = 1;
         YandexGame.RewVideoShow(1);
     }
 
@@ -34,9 +40,13 @@ public class Respawn : MonoBehaviour
 
     private void Update()
     {
-        addImage.fillAmount -= Time.deltaTime / 5;
+        if (!isPressed)
+            adImage.fillAmount -= Time.deltaTime / 5;
 
-        if (addImage.fillAmount == 0 && !isDestroed)
+        if (adImage.fillAmount < 0.12f)
+            adImage.GetComponent<Button>().enabled = false;
+
+        if (adImage.fillAmount == 0 && !isDestroed)
         {
             isDestroed = true;
             quitPanel.SetActive(true);
