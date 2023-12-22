@@ -225,7 +225,7 @@ public class _GameManager : MonoBehaviour
         surface.BuildNavMesh();
         EventBus.OnBearDied += AddBear;
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 17; i++)
         {            
             AddBear();
         }

@@ -133,7 +133,7 @@ public class BearAI : MonoBehaviour
         {
             animator.SetBool("isPatrolling", true);
             animator.SetBool("isChasing", false);
-            agent.SetDestination(walkPoint);
+            agent?.SetDestination(walkPoint);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;

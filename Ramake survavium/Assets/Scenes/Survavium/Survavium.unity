@@ -593,7 +593,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1919793038}
+      - m_Target: {fileID: 405061924}
         m_TargetAssemblyTypeName: Respawn, Assembly-CSharp
         m_MethodName: RespawnReward
         m_Mode: 1
@@ -4583,6 +4583,7 @@ GameObject:
   - component: {fileID: 405061921}
   - component: {fileID: 405061923}
   - component: {fileID: 405061922}
+  - component: {fileID: 405061924}
   m_Layer: 5
   m_Name: LoseMenu
   m_TagString: Untagged
@@ -4650,6 +4651,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405061920}
   m_CullTransparentMesh: 1
+--- !u!114 &405061924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405061920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16379911db5b54c45b3f0b1f5b04a5f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adImage: {fileID: 75199747}
+  quitPanel: {fileID: 687551530}
+  losePanel: {fileID: 405061920}
+  closeButton: {fileID: 1324795256}
+  respawnPanel: {fileID: 1919793036}
 --- !u!1 &410509935
 GameObject:
   m_ObjectHideFlags: 0
@@ -5668,7 +5686,7 @@ PrefabInstance:
     - target: {fileID: 2211564899198745196, guid: caf9732433f4dc044845763962493607, type: 3}
       propertyPath: RewardVideoAd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1919793038}
+      objectReference: {fileID: 0}
     - target: {fileID: 2211564899198745196, guid: caf9732433f4dc044845763962493607, type: 3}
       propertyPath: RewardVideoAd.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -16266,7 +16284,6 @@ GameObject:
   - component: {fileID: 1919793037}
   - component: {fileID: 1919793040}
   - component: {fileID: 1919793039}
-  - component: {fileID: 1919793038}
   m_Layer: 5
   m_Name: RespawnPanel
   m_TagString: Untagged
@@ -16297,22 +16314,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1919793038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919793036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16379911db5b54c45b3f0b1f5b04a5f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adImage: {fileID: 75199747}
-  quitPanel: {fileID: 687551530}
-  losePanel: {fileID: 405061920}
-  closeButton: {fileID: 1324795256}
 --- !u!114 &1919793039
 MonoBehaviour:
   m_ObjectHideFlags: 0
