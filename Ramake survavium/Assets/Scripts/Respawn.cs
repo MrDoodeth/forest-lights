@@ -12,24 +12,22 @@ public class Respawn : MonoBehaviour
 
     private void OnEnable()
     {
-        YandexGame.RewardVideoEvent += Reward;
         closeButton.GetComponent<Animation>().Play();
+        YandexGame.CloseVideoEvent += Reward;
     }
 
     private void OnDisable()
     {
-        YandexGame.RewardVideoEvent -= Reward;
+        YandexGame.CloseVideoEvent -= Reward;
     }
     public void RespawnReward()
     {
-        Time.timeScale = 0;
         YandexGame.RewVideoShow(1);
     }
 
-    public void Reward(int id)
+    public void Reward()
     {
-        losePanel.SetActive(false);
-        Time.timeScale = 1;
         EventBus.OnPlayerRespawn?.Invoke();
+        losePanel.SetActive(false);
     }
 }
