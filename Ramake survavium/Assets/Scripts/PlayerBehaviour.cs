@@ -378,7 +378,7 @@ public class PlayerBehaviour : MonoBehaviour
             attackButton.gameObject.SetActive(false);
             fireButton.gameObject.SetActive(false);
             pickUpButton.gameObject.SetActive(false);
-            HealButton.gameObject.SetActive(false);
+            HealButton.gameObject.SetActive(false);            
         }
     }
   

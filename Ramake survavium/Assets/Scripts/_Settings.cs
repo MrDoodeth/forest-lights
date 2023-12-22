@@ -12,13 +12,11 @@ public class _Settings : MonoBehaviour
     [SerializeField] private GameObject panelSettings;
     [SerializeField] private GameObject menu;
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Dropdown qualityDropdown;
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider renderScaleSlider;
     [SerializeField] private Toggle effectVolume;
-    [SerializeField] private Toggle showTutorial;
     [SerializeField] private UniversalRenderPipelineAsset Low;
     [SerializeField] private UniversalRenderPipelineAsset Medium;
     [SerializeField] private UniversalRenderPipelineAsset High;
@@ -138,7 +136,6 @@ public class _Settings : MonoBehaviour
         PlayerPrefs.SetFloat("VolumeMasterPreference", currentMasterVolume);
         PlayerPrefs.SetFloat("VolumeMusicPreference", currentMusicVolume);
         PlayerPrefs.SetInt("VolumeEffects", System.Convert.ToInt32(effectVolume.isOn));
-        PlayerPrefs.SetInt("ShowTutorial", System.Convert.ToInt32(showTutorial.isOn));
         PlayerPrefs.SetFloat("RenderScale", currentRenderScale);
     }
 
@@ -189,19 +186,6 @@ public class _Settings : MonoBehaviour
             effectVolume.isOn = true;
         SetEffects(effectVolume.isOn);
 
-        //ShowTutorial
-        if (PlayerPrefs.HasKey("ShowTutorial"))
-        {
-            showTutorial.isOn = System.Convert.ToBoolean(PlayerPrefs.GetInt("ShowTutorial"));
-            if (PlayerPrefs.GetInt("Platform") == (int)Platform.Phone)
-            {
-                showTutorial.isOn = false;
-            }
-        }
-        else
-        {
-            showTutorial.isOn = true;
-        }
 
         //RenderScale
         if (PlayerPrefs.HasKey("RenderScale"))
@@ -223,7 +207,7 @@ public class _Settings : MonoBehaviour
         if (PlayerPrefs.HasKey("Platform"))
         {
             if (_player is not null)
-                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");               
+                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");       
         }
         else
         {

@@ -46,7 +46,7 @@ public class LocaleSelector : MonoBehaviour
         {
             quality.options[0].text = "HIGH";
             quality.options[1].text = "MEDIUM";
-            quality.options[2].text = "LOW";
+            quality.options[2].text = "LOW";          
         }
         else
         {
@@ -54,6 +54,7 @@ public class LocaleSelector : MonoBehaviour
             quality.options[1].text = "Средние";
             quality.options[2].text = "Низкие";
         }
+        quality.captionText.text = quality.options[quality.value].text;
 
         isActive = false;
     }
