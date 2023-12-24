@@ -400,12 +400,6 @@ public class PlayerBehaviour : MonoBehaviour
 
         GUI_Update();
 
-        //// #Console command
-        //if (Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.N))
-        //{
-        //    CheckExit();
-        //}
-
         void Rotate()
         {
             Vector3 direction = new Vector3(target.position.x - transform.position.x, 0f, target.position.z - transform.position.z);
@@ -418,11 +412,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             vInput = Input.GetAxis("Vertical");
             hInput = Input.GetAxis("Horizontal");
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseButton();
-            }
         }
 
         if (platform == Platform.Phone)
