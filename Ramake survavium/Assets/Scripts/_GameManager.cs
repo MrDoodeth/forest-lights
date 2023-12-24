@@ -99,7 +99,7 @@ public class _GameManager : MonoBehaviour
         return Bush;
     }
 
-    private GameObject AddGround(int _i, int _j)
+    private GameObject AddGround(int _i, int _j, bool savePlace)
     {
         GameObject Ground = null;
 
@@ -117,7 +117,9 @@ public class _GameManager : MonoBehaviour
                 Ground = AddFlowers(_i, _j, _Flowers2);
                 break;
         }
-        freeTileList.Add(Ground.transform);
+        if (!savePlace)
+            freeTileList.Add(Ground.transform);
+
         return Ground;
     }
 
@@ -133,7 +135,7 @@ public class _GameManager : MonoBehaviour
                 Berry = AddBush(_i, _j);
                 break;
             default:
-                Berry = AddGround(_i, _j);
+                Berry = AddGround(_i, _j, false);
                 break;
         }
         return Berry;
@@ -179,7 +181,7 @@ public class _GameManager : MonoBehaviour
 
                 if ((saveZoneX && saveZoneY) || (exitZoneX && exitZoneY))
                 {
-                    tileArray[i,j] = AddGround(i,j);
+                    tileArray[i,j] = AddGround(i,j, true);
                 }
                 else
                 {
@@ -202,7 +204,7 @@ public class _GameManager : MonoBehaviour
                                 tileArray[i, j] = AddBerries(i, j);
                                 break;
                             default:
-                                tileArray[i, j] = AddGround(i, j);
+                                tileArray[i, j] = AddGround(i, j, false);
                                 break;
                         }
                     }

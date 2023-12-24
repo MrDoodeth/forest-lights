@@ -63,12 +63,6 @@ public class _Settings : MonoBehaviour
         LoadSettings();
     }
 
-
-
-    public void SetFullscreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-    }
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
@@ -149,15 +143,6 @@ public class _Settings : MonoBehaviour
         else
             qualityDropdown.value = 0;
         SetQuality(qualityDropdown.value);
-
-        //Fullscreen
-        if (PlayerPrefs.HasKey("FullscreenPreference"))
-        {
-            Screen.fullScreen = System.Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
-        }
-        else
-            Screen.fullScreen = true;
-        SetFullscreen(Screen.fullScreen);
 
         //MasterVolume
         if (PlayerPrefs.HasKey("VolumeMasterPreference"))
