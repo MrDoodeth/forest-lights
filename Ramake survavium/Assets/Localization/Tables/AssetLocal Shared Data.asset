@@ -19,6 +19,26 @@ MonoBehaviour:
     m_Key: Logo
     m_Metadata:
       m_Items: []
+  - m_Id: 749569981485056
+    m_Key: Q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 749788060127232
+    m_Key: WASD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 750067186864128
+    m_Key: E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 750113911410688
+    m_Key: F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 750827748397056
+    m_Key: Shift
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 4382197561134153736
@@ -36,6 +56,26 @@ MonoBehaviour:
       data:
         m_Entries:
         - m_KeyId: 1910215741440
+          m_TableCodes:
+          - en
+          - ru
+        - m_KeyId: 749569981485056
+          m_TableCodes:
+          - en
+          - ru
+        - m_KeyId: 749788060127232
+          m_TableCodes:
+          - ru
+          - en
+        - m_KeyId: 750067186864128
+          m_TableCodes:
+          - en
+          - ru
+        - m_KeyId: 750113911410688
+          m_TableCodes:
+          - en
+          - ru
+        - m_KeyId: 750827748397056
           m_TableCodes:
           - en
           - ru

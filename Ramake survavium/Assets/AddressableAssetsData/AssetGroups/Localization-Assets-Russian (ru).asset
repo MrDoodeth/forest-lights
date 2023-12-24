@@ -22,6 +22,31 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru
+  - m_GUID: 3f6048e3504992f49982d6329e348518
+    m_Address: "\u0419"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+  - m_GUID: 39ce39000cb9a834f9073f8587ddadb6
+    m_Address: "\u0410"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+  - m_GUID: a45f9a6dff5814744a30de40bb60daa8
+    m_Address: "\u0423"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+  - m_GUID: d6936834658b08048bc8dfdfb0945c24
+    m_Address: "\u0426\u0424\u042B\u0412"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+  - m_GUID: a8c6fd19a1b67b6499524ef125eaea32
+    m_Address: "\u0448\u0438\u0444\u0442"
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: eeeb822cca711544381b7e0fb9f396b8, type: 2}
   m_SchemaSet:

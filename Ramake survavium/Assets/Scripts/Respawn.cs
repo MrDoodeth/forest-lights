@@ -14,6 +14,7 @@ public class Respawn : MonoBehaviour
     {
         closeButton.GetComponent<Animation>().Play();
         YandexGame.CloseVideoEvent += Reward;
+        YandexGame.RewardVideoEvent += Reward;
     }
 
     private void OnDisable()
@@ -26,6 +27,12 @@ public class Respawn : MonoBehaviour
     }
 
     public void Reward()
+    {
+        EventBus.OnPlayerRespawn?.Invoke();
+        losePanel.SetActive(false);
+    }
+
+    public void Reward(int i)
     {
         EventBus.OnPlayerRespawn?.Invoke();
         losePanel.SetActive(false);
