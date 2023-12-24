@@ -7,6 +7,8 @@ using UnityEngine.Audio;
 using UnityEngine.Localization;
 using Platforms;
 using YG;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -40,6 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Button fireButton;
     [SerializeField] private Button pickUpButton;
     [SerializeField] private Button HealButton;
+    [SerializeField] private Button RunButton;
 
     [Header("Hit")]
     [SerializeField] private float attackRange = 0.5f;
@@ -87,6 +90,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float Speed;
     private Rigidbody _rb;
     private Vector3 Move = new Vector3();
+    public bool isRun = false;
 
     
     private void UpdateText(string text)
@@ -378,7 +382,8 @@ public class PlayerBehaviour : MonoBehaviour
             attackButton.gameObject.SetActive(false);
             fireButton.gameObject.SetActive(false);
             pickUpButton.gameObject.SetActive(false);
-            HealButton.gameObject.SetActive(false);            
+            HealButton.gameObject.SetActive(false);
+            RunButton.gameObject.SetActive(false);
         }
     }
   
@@ -534,36 +539,38 @@ public class PlayerBehaviour : MonoBehaviour
         }      
     }
 
-    public void Run(bool isRun)
+    public void Run(bool _isRun)
     {
-
-        if (isRun)
-        {
-            Stamina -= sprintCost;
-            if (Stamina > 0.05)
-            {
-                Speed *= 1.6f;
-                animator.speed = 1.6f;
-            }
-            else
-            {
-                animator.speed = 1f;
-            }
-        }
-        else
-        {
-            Stamina += sprintCost * 0.2f;
-            animator.speed = 1f;
-        }
+        isRun = _isRun;
     }
     void FixedUpdate()
     {
-        if (isAlive)
+        if (platform == Platform.PC)
+            Run(Input.GetKey(KeyCode.LeftShift));       
+
         //sprint
+        if (isAlive)
         {
             if (Move != Vector3.zero)
-            {
-                Run(Input.GetKey(KeyCode.LeftShift));
+            {               
+                if (isRun)
+                {                    
+                    Stamina -= sprintCost;
+                    if (Stamina > 0.05)
+                    {
+                        Speed *= 1.6f;
+                        animator.speed = 1.6f;
+                    }
+                    else
+                    {
+                        animator.speed = 1f;
+                    }
+                }
+                else
+                {
+                    Stamina += sprintCost * 0.2f;
+                    animator.speed = 1f;
+                }
             }
             else
             {
