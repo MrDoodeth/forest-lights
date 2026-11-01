@@ -227,23 +227,11 @@ public class _GameManager : MonoBehaviour
         surface.BuildNavMesh();
         EventBus.OnBearDied += AddBear;
 
-        for (int i = 0; i < 17; i++)
+        for (int i = 0; i < 14; i++)
         {            
             AddBear();
         }
 
         var _player = GameObject.Find("Man")?.GetComponent<PlayerBehaviour>();
-
-        //Platform
-        if (PlayerPrefs.HasKey("Platform"))
-        {
-            if (_player is not null)
-                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");
-        }
-        else
-        {
-            if (_player is not null)
-                _player.platform = Platform.PC;
-        }
     }
 }

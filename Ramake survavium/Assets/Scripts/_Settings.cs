@@ -47,12 +47,7 @@ public class _Settings : MonoBehaviour
     {
         LoadSettings();
     }
-
-    public void SetResolution(int resolutionIndex)
-    {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
+    
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
@@ -101,11 +96,6 @@ public class _Settings : MonoBehaviour
             case 2:
                 Low.renderScale = scale; break;
         }
-    }
-
-    public void SetPlatform(int platformIndex)
-    {
-        PlayerPrefs.SetInt("Platform", platformIndex);
     }
 
     public void SaveSettings()
@@ -166,22 +156,5 @@ public class _Settings : MonoBehaviour
             renderScaleSlider.value = 1;
         }
         SetRenderScale(renderScaleSlider.value);
-
-        if (_player is not null)
-        {
-            _player.platform = (Platform)PlayerPrefs.GetInt("Platform");
-        }
-
-        //Platform
-        if (PlayerPrefs.HasKey("Platform"))
-        {
-            if (_player is not null)
-                _player.platform = (Platform)PlayerPrefs.GetInt("Platform");       
-        }
-        else
-        {
-            if (_player is not null)
-                _player.platform = Platform.PC;              
-        }
     }
 }

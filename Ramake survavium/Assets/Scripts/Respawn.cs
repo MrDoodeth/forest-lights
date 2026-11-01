@@ -1,40 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
+using YandexMobileAds.Base;
 
 public class Respawn : MonoBehaviour
 {
-    [SerializeField] private Image adImage;
-    [SerializeField] private GameObject quitPanel;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject closeButton;
-    [SerializeField] private GameObject respawnPanel;
 
     private void OnEnable()
     {
         closeButton.GetComponent<Animation>().Play();
-        YandexGame.CloseVideoEvent += Reward;
-        YandexGame.RewardVideoEvent += Reward;
+        RewardedAdController.OnGotRewarded += Reward;
     }
 
     private void OnDisable()
     {
-        YandexGame.CloseVideoEvent -= Reward;
+        RewardedAdController.OnGotRewarded -= Reward;
     }
-    public void RespawnReward()
-    {
-        YandexGame.RewVideoShow(1);
-    }
-
-    public void Reward()
+    private void Reward(Reward reward)
     {
         EventBus.OnPlayerRespawn?.Invoke();
-        losePanel.SetActive(false);
-    }
-
-    public void Reward(int i)
-    {
-        EventBus.OnPlayerRespawn?.Invoke();
+        Debug.Log(reward.type);
         losePanel.SetActive(false);
     }
 }

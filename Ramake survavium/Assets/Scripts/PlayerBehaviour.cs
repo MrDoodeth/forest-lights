@@ -6,14 +6,11 @@ using UnityEngine.Playables;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
 using Platforms;
-using YG;
-using UnityEngine.EventSystems;
-using Unity.VisualScripting;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    [SerializeField] public Platform platform;
+    private Platform platform = Platform.Phone;
 
     [Header("Audio")]
     [SerializeField] private AudioMixerSnapshot inPause;
@@ -362,7 +359,6 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Start()
     {
-        YandexGame.FullscreenShow();
         animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         EventBus.OnExitActivated += CheckExit;

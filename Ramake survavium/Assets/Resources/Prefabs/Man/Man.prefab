@@ -5541,7 +5541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3942428354387873951}
-  platform: 0
+  platform: 1
   inPause: {fileID: 2911549602382421357, guid: 1e9cd9c7fa7b47f40b3a1f33dc397f73, type: 2}
   outPause: {fileID: 586807110822112021, guid: 1e9cd9c7fa7b47f40b3a1f33dc397f73, type: 2}
   source: {fileID: 2179236368103422543}
@@ -5569,9 +5569,11 @@ MonoBehaviour:
   Bug: {fileID: 1096187918148351988}
   joystickMovement: {fileID: 0}
   joystickAttack: {fileID: 0}
+  attackButton: {fileID: 0}
   fireButton: {fileID: 0}
   pickUpButton: {fileID: 0}
   HealButton: {fileID: 0}
+  RunButton: {fileID: 0}
   attackRange: 0.24
   attackZone: {fileID: 7956547317676183918}
   fxChop: {fileID: 1059651822204824562}
@@ -5611,6 +5613,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   director: {fileID: 0}
+  isRun: 0
   references:
     version: 2
     RefIds: []
